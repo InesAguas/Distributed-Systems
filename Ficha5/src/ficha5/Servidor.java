@@ -4,11 +4,8 @@
  */
 package ficha5;
 
-import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -17,19 +14,18 @@ import java.util.logging.Logger;
 public class Servidor {
     
     public static void main(String[] args) {
-        int threads = 0;
-        
         try {
             ServerSocket serversocket = new ServerSocket(4000);
             
             while(true) {
                 Socket socket = serversocket.accept();
                 //fazer print de IP remoto, porto remoto, IP local e porto local.
+                System.out.println("IP local: " + socket.getLocalAddress().getHostAddress() 
+                        + "Porto local: " + socket.getLocalPort());
+                System.out.println("IP remoto: " + socket.getInetAddress().getHostAddress() 
+                        + "Porto remoto: " + socket.getPort());
                 ThreadServidor thr = new ThreadServidor(socket);
                 thr.start();
-                threads++;
-                System.out.println("Nova thread iniciada.");
-                System.out.println("Threads ativas: " + threads);
             }
         } catch (Exception ex) {
            System.out.println("Erro: " + ex.getMessage());
